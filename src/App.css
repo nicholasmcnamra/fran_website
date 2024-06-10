@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&display=swap');
+
 .container {
   background-color: rgb(249, 246, 243);
 }
@@ -5,24 +7,24 @@
 .header {
   background-color: rgb(249, 246, 243);
   padding: 30px;
-  font-family:'Courier New', Courier, monospace;
+  font-family:'Source Code Pro';
   text-align: center;
   font-size: 40px;
-  font-weight: 550;
+  font-weight: 200;
 }
 .toolbar {
   color: black;
   background-color: rgb(242, 233, 221);
-  font-family: monospace;
+  font-family: 'Source Code Pro';
  /* Ensure the navbar is above the home image */
 }
 
 .toolbar .customButton {
-  font-family: monospace;
+  font-family: 'Source Code Pro';
 }
 
 .menuItemRoot .customButton {
-  font-family: monospace;
+  font-family: 'Source Code Pro';
 }
 
 .toolbar .menu-items {
@@ -31,8 +33,9 @@
 }
 
 .home-image {
-  height: 100vh;
-  width: 100vw;
+  height: auto;
+  width: 100%;
+  display: block;
 }
 
 .navbar-container {
@@ -43,5 +46,42 @@
 }
 
 .home-container {
-  position: relative; 
+  position: relative;
+}
+
+.image-container {
+  position: relative;
+}
+
+.home-button {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.about-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.about-text-area{
+  text-align: left;
+  padding: 20px;
+  font-family: 'Source Code Pro';
+  font-weight: 250;
+  line-height: 30px;
+}
+
+.about-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.about-text-area, .about-image-area {
+  flex: 1;
 }

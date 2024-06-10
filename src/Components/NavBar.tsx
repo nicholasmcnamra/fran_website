@@ -25,12 +25,12 @@ const NavBar = () => {
   };
 
   return (
+    <div className="navbar-container"> 
     <AppBar position="static">
-      <Toolbar className='toolbar'>
-        <Typography variant="h6" className='customButton' style={{fontFamily: 'monospace'}}>
-          Frances Carter
+      <Toolbar className='toolbar' style={{ justifyContent: 'center' }}>
+        <Typography variant="h6" className='customButton'>
         </Typography>
-        <div style={{ marginLeft: 'auto' }}>
+        <div>
         {isSmallScreen ? (
           <>
             <IconButton onClick={handleMenuClick} edge="end" color="inherit" aria-label="menu">
@@ -43,6 +43,7 @@ const NavBar = () => {
               open={Boolean(anchorEl)}
               onClose={() => setAnchorEl(null)}
               classes={{ list: 'menuItemRoot' }}
+
             >
               <MenuItem onClick={handleMenuItemClick} className='customButton'>Home</MenuItem>
               <MenuItem onClick={handleMenuItemClick} className='customButton'>About</MenuItem>
@@ -61,6 +62,7 @@ const NavBar = () => {
         </div>
       </Toolbar>
     </AppBar>
+    </div>
   );
 };
 

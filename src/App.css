@@ -1,9 +1,20 @@
+.container {
+  background-color: rgb(249, 246, 243);
+}
+
+.header {
+  background-color: rgb(249, 246, 243);
+  padding: 30px;
+  font-family:'Courier New', Courier, monospace;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 550;
+}
 .toolbar {
   color: black;
-  background-color: white;
-  padding: 10px;
+  background-color: rgb(242, 233, 221);
   font-family: monospace;
-
+ /* Ensure the navbar is above the home image */
 }
 
 .toolbar .customButton {
@@ -12,4 +23,25 @@
 
 .menuItemRoot .customButton {
   font-family: monospace;
+}
+
+.toolbar .menu-items {
+  display: flex;
+  justify-content: center;
+}
+
+.home-image {
+  height: 100vh;
+  width: 100vw;
+}
+
+.navbar-container {
+  position: relative; 
+  top: 0;
+  width: 100%; 
+  z-index: 1;
+}
+
+.home-container {
+  position: relative; 
 }

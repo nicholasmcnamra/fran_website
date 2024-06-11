@@ -8,16 +8,20 @@ interface ViewButtonProps {
 const ViewButton: React.FC<ViewButtonProps> = ({ display }) => {
     return (
     <div className={display === "displayed" ? "display" : "notdisplayed"}>
-        {display === "displayed" && <Button className="home-button" variant="outlined"                     sx={{
-                        color: "white", // Example text color
-                        borderColor: "white", 
-                        borderRadius: "0px",
-                        fontSize: "2.5rem",
-                        borderWidth: "10px",
-                        "&:hover": {
-                            borderColor: "white",
-                        }
-                    }}>View Work</Button>}
+        {display === "displayed" && 
+        <Button 
+        className="home-button" 
+        variant="outlined" 
+        sx={{
+        color: "white", // Example text color
+        borderColor: "white", 
+        borderRadius: "0px",
+        fontSize: "2.5rem",
+        borderWidth: "10px",
+        "&:hover": {
+        borderColor: "white",
+        }
+    }}>View Work</Button>}
     </div>)
 }
 

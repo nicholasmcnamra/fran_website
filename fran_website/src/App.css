@@ -85,3 +85,15 @@
 .about-text-area, .about-image-area {
   flex: 1;
 }
+
+.works-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.works {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}

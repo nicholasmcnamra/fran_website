@@ -1,11 +1,18 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface ViewButtonProps {
     display: "displayed" | "notdisplayed"; 
 }
 
 const ViewButton: React.FC<ViewButtonProps> = ({ display }) => {
+    const navigate = useNavigate();
+
+    const handleButtonClick = () => {
+        navigate("/works");
+    }
+
     return (
     <div className={display === "displayed" ? "display" : "notdisplayed"}>
         {display === "displayed" && 
@@ -21,7 +28,8 @@ const ViewButton: React.FC<ViewButtonProps> = ({ display }) => {
         "&:hover": {
         borderColor: "white",
         }
-    }}>View Work</Button>}
+    }} 
+    onClick={handleButtonClick}>View Work</Button>}
     </div>)
 }
 

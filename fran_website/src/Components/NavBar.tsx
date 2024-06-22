@@ -55,7 +55,7 @@ const NavBar = () => {
             <div className='customButtons'>
             <Button color="inherit" className='customButton' href="/">Home</Button>
             <Button color='inherit' className='customButton' href='/about'>About</Button>
-            <Button color='inherit' className='customButton'>Work</Button>
+            <Button color='inherit' className='customButton' href='/works'>Work</Button>
             <Button color='inherit' className='customButton'>Contact</Button>
             </div>
         )}

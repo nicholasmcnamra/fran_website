@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 
 const Works = () => {
     const [works, setWorks] = useState<string[]>([]);
 
     const tempWorks: string[] = 
-    ['https://watercolour-workshop.com/wp-content/uploads/2022/08/watercolour-landscape-painting-1.jpg', 
+    ['https://mapsandart.com/wp-content/uploads/2016/04/10537M-scaled.jpg', 
     'https://m.media-amazon.com/images/S/aplus-media/vc/070d7062-31a0-45a5-9045-41d5c1c0d8fd.__CR0,0,2021,1250_PT0_SX970_V1___.jpg', 
     'https://i.pinimg.com/736x/25/ba/f5/25baf503204609e69bbd4850649e3b95.jpg', 
     'https://i.etsystatic.com/25611550/r/il/a260b2/2707846524/il_570xN.2707846524_cgsk.jpg', 
@@ -14,6 +14,9 @@ const Works = () => {
     'https://i.ebayimg.com/images/g/8ecAAOSwn29j4adx/s-l1200.jpg', 
     'https://i.ytimg.com/vi/avYg2bhqTSI/maxresdefault.jpg']
 
+    const handleOpenModal = (index: number): any => {
+        console.log("Image number: ", index);
+    }
 
     useEffect(() => {
             setWorks(tempWorks);
@@ -22,7 +25,7 @@ const Works = () => {
     return (
         <div className="works-container">
             {works.map((imageUrl, index) => (
-                <img key={index} src={imageUrl} alt={`Work ${index}`} className="works" />
+                <img key={index} src={imageUrl} alt={`Work ${index}`} className="works" onClick={handleOpenModal(index)}/>
             ))}
         </div>
     )

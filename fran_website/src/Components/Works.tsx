@@ -14,7 +14,7 @@ const Works = () => {
     'https://i.ebayimg.com/images/g/8ecAAOSwn29j4adx/s-l1200.jpg', 
     'https://i.ytimg.com/vi/avYg2bhqTSI/maxresdefault.jpg']
 
-    const handleOpenModal = (index: number): any => {
+    const handleOpenModal = (index: number): void => {
         console.log("Image number: ", index);
     }
 
@@ -25,7 +25,7 @@ const Works = () => {
     return (
         <div className="works-container">
             {works.map((imageUrl, index) => (
-                <img key={index} src={imageUrl} alt={`Work ${index}`} className="works" onClick={handleOpenModal(index)}/>
+                <img key={index} src={imageUrl} alt={`Work ${index}`} className="works" onClick={(e) => handleOpenModal(index)}/>
             ))}
         </div>
     )

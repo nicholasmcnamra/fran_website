@@ -1,7 +1,11 @@
 import { MouseEventHandler, useEffect, useState } from "react";
+import OpenImage from "./ImageModal";
+
 
 const Works = () => {
     const [works, setWorks] = useState<string[]>([]);
+    const [clickedWork, setClickedWork] = useState<string>('');
+    const [isVisible, setIsVisible] = useState<Boolean>(false);
 
     const tempWorks: string[] = 
     ['https://mapsandart.com/wp-content/uploads/2016/04/10537M-scaled.jpg', 
@@ -16,6 +20,13 @@ const Works = () => {
 
     const handleOpenModal = (index: number): void => {
         console.log("Image number: ", index);
+        setClickedWork(works[index]);
+        setIsVisible(true);
+    }
+
+    const handleCloseModal = () => {
+        setIsVisible(false);
+        console.log("clicked")
     }
 
     useEffect(() => {
@@ -27,6 +38,7 @@ const Works = () => {
             {works.map((imageUrl, index) => (
                 <img key={index} src={imageUrl} alt={`Work ${index}`} className="works" onClick={(e) => handleOpenModal(index)}/>
             ))}
+            {<OpenImage imageDetails={clickedWork} isVisible={isVisible} setIsVisible={setIsVisible}/>}
         </div>
     )
 }

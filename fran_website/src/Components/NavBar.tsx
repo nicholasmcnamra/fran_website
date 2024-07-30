@@ -26,7 +26,7 @@ const NavBar = () => {
 
   return (
     <div className="navbar-container"> 
-    <AppBar position="static">
+    <AppBar position="static" className='navbar'>
       <Toolbar className='toolbar' style={{ justifyContent: 'center' }}>
         <Typography variant="h6" className='customButton'>
         </Typography>

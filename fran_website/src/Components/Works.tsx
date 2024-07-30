@@ -24,11 +24,6 @@ const Works = () => {
         setIsVisible(true);
     }
 
-    const handleCloseModal = () => {
-        setIsVisible(false);
-        console.log("clicked")
-    }
-
     useEffect(() => {
             setWorks(tempWorks);
     }, [])

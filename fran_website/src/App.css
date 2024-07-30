@@ -99,7 +99,7 @@
   object-fit: cover;
 }
 
-.image-container {
+.mod-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -109,11 +109,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
 
-.image-display {
+.mod-display {
   position: relative;
   background-color: white;
   padding: 4em 2em;
-  z-index: 1;
 }

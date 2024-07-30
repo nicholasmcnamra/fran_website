@@ -9,8 +9,8 @@ const OpenImage: React.FC<ImageProps> = ({imageDetails, isVisible, setIsVisible}
 
 
     return ( isVisible ?
-        <div className="image-container"onClick={() => setIsVisible(false)}>
-            <div className="image-display" >
+        <div className="mod-container"onClick={() => setIsVisible(false)}>
+            <div className="mod-display" >
             <img src={imageDetails} alt="" className="image" />
             </div>
         </div> : null

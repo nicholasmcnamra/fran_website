@@ -6,22 +6,36 @@ import Home from './Components/Home';
 import About from './Components/About';
 import Works from './Components/Works';
 import ContactPage from './Components/ContactForm';
+import Account from './Components/Account';
 
 function App() {
   return (
     <div className="container">
-      <div className='header'>Frances Carter</div>
-      <NavBar />
+
       <Router>
         <Routes>
-          <Route path="/" element={<Home/>}></Route>
-          <Route path="/about" element={<About/>}></Route>
-          <Route path="/works" element={<Works />}></Route>
-          <Route path="/contact" element={<ContactPage/>}></Route>
+          <Route path="/" element={withNavbar(Home)}></Route>
+          <Route path="/about" element={withNavbar(About)}></Route>
+          <Route path="/works" element={withNavbar(Works)}></Route>
+          <Route path="/contact" element={withNavbar(ContactPage)}></Route>
+          <Route path="/account" element={<Account props={null}/>}></Route>
         </Routes>
       </Router>
     </div>
   );
+}
+
+const withNavbar = (Component:React.FC) => {
+  return (
+    <div>
+      <div className="component-container">
+      <div className='header'>Frances Carter</div>
+      <NavBar />
+      <Component></Component>
+      </div>
+
+    </div>
+  )
 }
 
 export default App;

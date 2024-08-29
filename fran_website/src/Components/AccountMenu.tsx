@@ -5,7 +5,11 @@ import MenuList from '@mui/material/MenuList';
 import { Menu } from '@mui/material';
 import { useState } from 'react';
 
-const AccountMenu = ({ }) => {
+interface AccountMenuProps {
+    props: null;
+}
+
+const AccountMenu: React.FC<AccountMenuProps> = ({ }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 

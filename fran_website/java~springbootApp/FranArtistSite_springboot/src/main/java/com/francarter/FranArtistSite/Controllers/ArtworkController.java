@@ -31,7 +31,7 @@ public class ArtworkController {
     public ResponseEntity<Artwork> update(@PathVariable Long id, @RequestBody Artwork artwork) {
         return new ResponseEntity<>(artworkService.update(id, artwork), HttpStatus.OK);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/artwork/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         return new ResponseEntity<>(artworkService.delete(id), HttpStatus.OK);
     }

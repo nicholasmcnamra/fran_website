@@ -1,15 +1,12 @@
 package com.francarter.FranArtistSite.Services;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.DeleteObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Exception;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,11 +15,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Date;
 
 @Service
 public class AmazonClient {
-    private AmazonS3 s3client;
+    private S3Client s3client;
     @Value("${amazon.s3.endpointUrl}")
     private String endpointUrl;
     @Value("${amazon.s3.bucketName}")
@@ -31,34 +29,56 @@ public class AmazonClient {
     private String accessKey;
     @Value("${amazon.s3.secretKey}")
     private String secretKey;
+
     @PostConstruct
     private void initializeAmazon() {
-        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-        this.s3client = AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .withRegion(Regions.US_EAST_1)
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(this.accessKey, this.secretKey);
+        this.s3client = S3Client.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
+                .region(Region.US_EAST_2)  // Ensure this is the correct region
                 .build();
+
+        // Debugging info
+        System.out.println("Endpoint URL: " + endpointUrl);
+        System.out.println("Bucket Name: " + bucketName);
+        System.out.println("Access Key: " + accessKey);
+        System.out.println("Secret Key: " + secretKey);
     }
+
     private File convertMultipartFile(MultipartFile file) throws IOException {
         File convFile = new File(file.getOriginalFilename());
-        FileOutputStream outputStream = new FileOutputStream(convFile);
-        outputStream.write(file.getBytes());
-        outputStream.close();
+        try (FileOutputStream outputStream = new FileOutputStream(convFile)) {
+            outputStream.write(file.getBytes());
+        }
         return convFile;
     }
+
     private String generateFileName(MultipartFile multipartFile) {
         return new Date().getTime() + "-" + multipartFile.getOriginalFilename().replace(" ", "_");
     }
+
     private void uploadFileToS3Bucket(String fileName, File file) {
-        s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
+        try {
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .acl("public-read")
+                    .build();
+
+            s3client.putObject(putObjectRequest, Paths.get(file.getAbsolutePath()));
+            System.out.println("File uploaded successfully: " + fileName);
+        } catch (S3Exception e) {
+            System.out.println("Error occurred while uploading: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
+
     public String uploadFile(MultipartFile multipartFile) {
         String fileUrl = "";
         try {
             File file = convertMultipartFile(multipartFile);
             String fileName = generateFileName(multipartFile);
-            fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
+            fileUrl = endpointUrl + "/" + fileName; // Ensure URL format is correct
             uploadFileToS3Bucket(fileName, file);
             file.delete();
         } catch (Exception e) {
@@ -66,9 +86,20 @@ public class AmazonClient {
         }
         return fileUrl;
     }
-    public String deleteFileFromS3Bucket( String fileUrl) {
-        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/"));
-        s3client.deleteObject((new DeleteObjectRequest(bucketName + "/", fileName)));
-        return "Successfully deleted";
+
+    public String deleteFileFromS3Bucket(String fileUrl) {
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1); // Correctly extract file name
+        try {
+            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .build();
+
+            s3client.deleteObject(deleteObjectRequest);
+            return "Successfully deleted";
+        } catch (S3Exception e) {
+            System.out.println("Error occurred while deleting: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

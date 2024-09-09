@@ -35,7 +35,7 @@ public class AmazonClient {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(this.accessKey, this.secretKey);
         this.s3client = S3Client.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
-                .region(Region.US_EAST_2)  // Ensure this is the correct region
+                .region(Region.US_EAST_2)
                 .build();
 
         // Debugging info
@@ -78,7 +78,7 @@ public class AmazonClient {
         try {
             File file = convertMultipartFile(multipartFile);
             String fileName = generateFileName(multipartFile);
-            fileUrl = endpointUrl + "/" + fileName; // Ensure URL format is correct
+            fileUrl = endpointUrl + "/" + fileName;
             uploadFileToS3Bucket(fileName, file);
             file.delete();
         } catch (Exception e) {
@@ -88,7 +88,7 @@ public class AmazonClient {
     }
 
     public String deleteFileFromS3Bucket(String fileUrl) {
-        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1); // Correctly extract file name
+        String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         try {
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                     .bucket(bucketName)

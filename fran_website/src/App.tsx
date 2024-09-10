@@ -7,6 +7,7 @@ import About from './Components/About';
 import Works from './Components/Works';
 import ContactPage from './Components/ContactForm';
 import Account from './Components/Account';
+import ArtworksPortal from './Components/ArtworksPortal';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/works" element={withNavbar(Works)}></Route>
           <Route path="/contact" element={withNavbar(ContactPage)}></Route>
           <Route path="/account" element={<Account props={null}/>}></Route>
+          <Route path="/artwork" element={<ArtworksPortal props={null}/>}></Route>
         </Routes>
       </Router>
     </div>

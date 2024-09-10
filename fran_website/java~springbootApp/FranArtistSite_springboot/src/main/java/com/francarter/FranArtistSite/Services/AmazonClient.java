@@ -62,7 +62,6 @@ public class AmazonClient {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(fileName)
-                    .acl("public-read")
                     .build();
 
             s3client.putObject(putObjectRequest, Paths.get(file.getAbsolutePath()));

@@ -31,7 +31,11 @@ const Works = () => {
     return (
         <div className="works-container">
             {works.map((imageUrl, index) => (
+                <div
+                className={`image-wrapper ${index % 3 === 0 ? 'tall' : ''}`}
+                key={index}>
                 <img key={index} src={imageUrl} alt={`Work ${index}`} className="works" onClick={(e) => handleOpenModal(index)}/>
+                </div>
             ))}
             {<OpenImage imageDetails={clickedWork} isVisible={isVisible} setIsVisible={setIsVisible}/>}
         </div>

@@ -22,13 +22,13 @@ import java.util.stream.Collectors;
 @Service
 public class AmazonClient {
     private S3Client s3client;
-    @Value("${amazon.s3.endpointUrl}")
+    @Value("${spring.aws.s3.endpoint-url}")
     private String endpointUrl;
-    @Value("${amazon.s3.bucketName}")
+    @Value("${spring.aws.s3.bucket}")
     private String bucketName;
-    @Value("${amazon.s3.accessKey}")
+    @Value("${spring.aws.s3.access-key}")
     private String accessKey;
-    @Value("${amazon.s3.secretKey}")
+    @Value("${spring.aws.s3.secret-key}")
     private String secretKey;
 
     @PostConstruct

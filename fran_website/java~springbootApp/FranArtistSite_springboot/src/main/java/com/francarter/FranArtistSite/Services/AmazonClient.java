@@ -4,9 +4,7 @@ import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
-import software.amazon.awssdk.services.s3.model.S3Exception;
+import software.amazon.awssdk.services.s3.model.*;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AmazonClient {
@@ -55,6 +56,27 @@ public class AmazonClient {
 
     private String generateFileName(MultipartFile multipartFile) {
         return new Date().getTime() + "-" + multipartFile.getOriginalFilename().replace(" ", "_");
+    }
+
+    private String getFileUrl(String key) {
+        return String.format("%s/%s", endpointUrl, key);
+    }
+    public List<String> getFilesFromS3Bucket() {
+        try {
+            ListObjectsV2Request listObjectsV2Request = ListObjectsV2Request.builder()
+                    .bucket(bucketName)
+                    .build();
+
+            ListObjectsV2Response listObjectsV2Response = s3client.listObjectsV2(listObjectsV2Request);
+            System.out.println("Files retrieved successfully");
+            return listObjectsV2Response.contents().stream()
+                    .map(S3Object::key)
+                    .map(this::getFileUrl)
+                    .collect(Collectors.toList());
+        } catch (S3Exception e) {
+            System.out.println("Error occurred while fetching files: " + e.getMessage());
+        }
+        return Collections.emptyList();
     }
 
     private void uploadFileToS3Bucket(String fileName, File file) {
